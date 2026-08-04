@@ -17,6 +17,7 @@ export function PendidikanPage() {
   useDocumentTitle('Pendidikan | Desa Galih Lunik')
 
   const facilities = facilitiesQuery.data ?? EMPTY_ROWS
+  const fetchError = facilitiesQuery.error?.message || null
 
   const types = useMemo(
     () => ['Semua', ...new Set(facilities.map((item) => item.type).filter(Boolean))],
@@ -35,6 +36,12 @@ export function PendidikanPage() {
         title="Daftar fasilitas pendidikan di desa"
         description="Card di bawah ini ditarik dari tabel education_facilities dan bisa difilter berdasarkan jenis fasilitas."
       />
+
+      {fetchError ? (
+        <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          {fetchError}
+        </div>
+      ) : null}
 
       <section className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Card className="p-5">
