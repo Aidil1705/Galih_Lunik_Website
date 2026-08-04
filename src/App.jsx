@@ -1,64 +1,37 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import { navItems, normalizePath, pageTitles } from './content/siteContent'
-import { PageShell } from './components/PageShell'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { SiteLayout } from './layouts/SiteLayout'
 import { HomePage } from './pages/HomePage'
 import { ProfilPage } from './pages/ProfilPage'
 import { PemerintahanPage } from './pages/PemerintahanPage'
 import { DataPage } from './pages/DataPage'
 import { PendidikanPage } from './pages/PendidikanPage'
+import { NotFoundPage } from './pages/NotFoundPage'
+import { LoginPage } from './pages/LoginPage'
+import { ManagementPage } from './pages/ManagementPage'
+import { ProtectedRoute } from './components/ProtectedRoute'
 
 function App() {
-  const [currentPath, setCurrentPath] = useState(() => normalizePath(window.location.pathname))
-
-  useEffect(() => {
-    const onPopState = () => {
-      setCurrentPath(normalizePath(window.location.pathname))
-    }
-
-    window.addEventListener('popstate', onPopState)
-
-    return () => {
-      window.removeEventListener('popstate', onPopState)
-    }
-  }, [])
-
-  useEffect(() => {
-    const normalizedPath = normalizePath(window.location.pathname)
-
-    if (normalizedPath !== window.location.pathname) {
-      window.history.replaceState({}, '', normalizedPath)
-    }
-
-    document.title = pageTitles[currentPath] ?? pageTitles['/']
-  }, [currentPath])
-
-  function navigate(event, nextPath) {
-    event.preventDefault()
-
-    const normalizedPath = normalizePath(nextPath)
-
-    if (normalizedPath === currentPath) {
-      return
-    }
-
-    window.history.pushState({}, '', normalizedPath)
-    setCurrentPath(normalizedPath)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
-  const page = {
-    '/': <HomePage />,
-    '/profil': <ProfilPage />,
-    '/pemerintahan': <PemerintahanPage />,
-    '/data': <DataPage />,
-    '/pendidikan': <PendidikanPage />,
-  }[currentPath]
-
   return (
-    <PageShell currentPath={currentPath} navigate={navigate} navItems={navItems}>
-      {page}
-    </PageShell>
+    <Routes>
+      <Route element={<SiteLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="profil" element={<ProfilPage />} />
+        <Route path="pemerintahan" element={<PemerintahanPage />} />
+        <Route path="data" element={<DataPage />} />
+        <Route path="pendidikan" element={<PendidikanPage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route
+          path="management"
+          element={
+            <ProtectedRoute>
+              <ManagementPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="home" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   )
 }
 

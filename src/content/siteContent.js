@@ -1,9 +1,12 @@
+export const siteName = 'Desa Galih Lunik'
+
 export const navItems = [
   { path: '/', label: 'Beranda' },
   { path: '/profil', label: 'Profil' },
   { path: '/pemerintahan', label: 'Pemerintahan' },
   { path: '/data', label: 'Data' },
   { path: '/pendidikan', label: 'Pendidikan' },
+  { path: '/login', label: 'Login' },
 ]
 
 export const pageTitles = {
