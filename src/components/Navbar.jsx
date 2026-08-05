@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Leaf, Menu, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { navItems } from '../content/siteContent'
 
 export function Navbar({ profile, isLoading = false }) {
@@ -10,8 +10,12 @@ export function Navbar({ profile, isLoading = false }) {
     <header className="sticky top-0 z-50 border-b border-emerald-100 bg-white/90 backdrop-blur-xl">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <Link to="/" className="flex items-center gap-3">
-          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-lg shadow-emerald-200">
-            <Leaf className="h-5 w-5" />
+          <span className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-lg shadow-emerald-200">
+            <img
+              src="/images/Kabupaten-Lampung-Selatan-Logo.webp"
+              alt="Logo Kabupaten Lampung Selatan"
+              className="h-full w-full object-contain p-1"
+            />
           </span>
           <span className="min-w-0">
             <span className="block truncate text-sm font-bold uppercase tracking-[0.22em] text-emerald-700">
