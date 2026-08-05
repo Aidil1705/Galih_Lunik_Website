@@ -12,7 +12,7 @@ export function Navbar({ profile, isLoading = false }) {
         <Link to="/" className="flex items-center gap-3">
           <span className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-lg shadow-emerald-200">
             <img
-              src="/images/Kabupaten-Lampung-Selatan-Logo.webp"
+              src="/images/Kabupaten-Lampung-Selatan-Logo.png"
               alt="Logo Kabupaten Lampung Selatan"
               className="h-full w-full object-contain p-1"
             />
