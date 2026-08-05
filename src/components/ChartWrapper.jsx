@@ -1,4 +1,4 @@
-export function ChartWrapper({ title, description, loading = false, emptyState, children, className = '' }) {
+  export function ChartWrapper({ title, description, loading = false, emptyState, children, className = '' }) {
   return (
     <section className={`rounded-3xl border border-emerald-100 bg-white/90 p-5 shadow-sm ${className}`}>
       <div className="mb-4">
