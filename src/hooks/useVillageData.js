@@ -13,6 +13,14 @@ import {
 import { sortRowsByDate, sortRowsByYear } from '../lib/dataHelpers'
 
 async function fetchTableRows(tableName) {
+  // Debug: log when fetchTableRows is called and current supabase config
+  try {
+    // eslint-disable-next-line no-console
+    console.log('[useVillageData] fetchTableRows called for', tableName)
+    // eslint-disable-next-line no-console
+    console.log('[useVillageData] isSupabaseConfigured=', isSupabaseConfigured, 'supabase=', !!supabase)
+  } catch (e) {}
+
   if (!supabase) {
     return []
   }
@@ -20,8 +28,18 @@ async function fetchTableRows(tableName) {
   const { data, error } = await supabase.from(tableName).select('*')
 
   if (error) {
+    // Debug: log Supabase error
+    try {
+      // eslint-disable-next-line no-console
+      console.error('[useVillageData] Supabase error fetching', tableName, error)
+    } catch (e) {}
     throw error
   }
+
+  try {
+    // eslint-disable-next-line no-console
+    console.log('[useVillageData] fetched', tableName, Array.isArray(data) ? data.length : 0, 'rows')
+  } catch (e) {}
 
   return Array.isArray(data) ? data : []
 }

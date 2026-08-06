@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import {
   BarChart3,
   BookOpenText,
@@ -135,6 +136,7 @@ function getItemById(items, id) {
 }
 
 export function ManagementPage() {
+  const queryClient = useQueryClient()
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
@@ -458,6 +460,7 @@ const existingNews = getItemById(newsItems, newsForm.id)
       }
 
       setGalleryForm(emptyGalleryForm)
+      await queryClient.invalidateQueries({ queryKey: ['gallery'] })
       setMessage('Galeri berhasil disimpan.')
     } catch (uploadError) {
       setError(uploadError.message)
@@ -478,6 +481,7 @@ const existingNews = getItemById(newsItems, newsForm.id)
     }
 
     setGalleryItems((current) => current.filter((item) => item.id !== id))
+    await queryClient.invalidateQueries({ queryKey: ['gallery'] })
     setMessage('Foto galeri berhasil dihapus.')
   }
 
@@ -720,6 +724,7 @@ const existingNews = getItemById(newsItems, newsForm.id)
       }
 
       setEducationForm(emptyEducationForm)
+      await queryClient.invalidateQueries({ queryKey: ['education_facilities'] })
       setMessage('Fasilitas pendidikan berhasil disimpan.')
     } catch (uploadError) {
       setError(uploadError.message)
@@ -740,6 +745,7 @@ const existingNews = getItemById(newsItems, newsForm.id)
     }
 
     setEducationItems((current) => current.filter((item) => item.id !== id))
+    await queryClient.invalidateQueries({ queryKey: ['education_facilities'] })
     setMessage('Fasilitas pendidikan berhasil dihapus.')
   }
 

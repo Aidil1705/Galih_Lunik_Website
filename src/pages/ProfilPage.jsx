@@ -1,5 +1,4 @@
 import { useMemo } from 'react'
-import { CircleMarker, MapContainer, Popup, TileLayer } from 'react-leaflet'
 import { useOutletContext } from 'react-router-dom'
 import { Landmark, Sparkles } from 'lucide-react'
 import {
@@ -54,7 +53,8 @@ export function ProfilPage() {
     data: buildDemographicChartData(yearRows, category.key),
   }))
 
-  const hasCoordinates = Number.isFinite(profile?.latitude) && Number.isFinite(profile?.longitude)
+  const officeMapEmbedUrl =
+    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.6525506902826!2d105.37035897408894!3d-5.423303694555957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e40ddb815505487%3A0xd89d75e23b17d60e!2sBalai%20Desa%20Galih%20Lunik!5e1!3m2!1sid!2sid!4v1785934610711!5m2!1sid!2sid'
 
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
@@ -160,43 +160,23 @@ export function ProfilPage() {
       <section className="mt-10 space-y-5">
         <SectionHeading
           eyebrow="Letak Geografis"
-          title="Lokasi desa di peta"
-          description="Koordinat latitude dan longitude diambil dari village_profile lalu ditampilkan memakai Leaflet."
+          title="Lokasi kantor desa di peta"
+          description="Embed Google Maps berikut menampilkan Balai Desa Galih Lunik secara langsung."
         />
         <Card className="overflow-hidden p-0">
-          {hasCoordinates ? (
-            <div className="h-[360px] w-full">
-              <MapContainer
-                center={[profile.latitude, profile.longitude]}
-                zoom={14}
-                scrollWheelZoom={false}
-                className="h-full w-full"
-              >
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <CircleMarker
-                  center={[profile.latitude, profile.longitude]}
-                  radius={10}
-                  pathOptions={{ color: '#059669', fillColor: '#10b981', fillOpacity: 0.9 }}
-                >
-                  <Popup>
-                    {profile.villageName}
-                    <br />
-                    {profile.geography}
-                  </Popup>
-                </CircleMarker>
-              </MapContainer>
-            </div>
-          ) : (
-            <div className="p-6">
-              <EmptyState
-                title="Koordinat belum tersedia"
-                description="Tambahkan latitude dan longitude di village_profile agar peta dapat ditampilkan."
-              />
-            </div>
-          )}
+          <div className="h-[360px] w-full bg-slate-100">
+            <iframe
+              title="Lokasi kantor desa Galih Lunik di Google Maps"
+              src={officeMapEmbedUrl}
+              width="600"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              className="h-full w-full"
+            />
+          </div>
         </Card>
       </section>
 
